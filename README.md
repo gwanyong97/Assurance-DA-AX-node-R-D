@@ -1,6 +1,6 @@
 # Unified ET Task Calendar
 
-**[→ 라이브 데모 보기](https://assurance-da-ax-node-r-d.vercel.app)**
+**[→ 라이브 데모 보기](https://et-calendar-six.vercel.app)**
 
 삼일회계법인의 Pooling 제도 하에서 Staff 회계사는 필연적으로 다수의 ET(Engagement Team)에 소속되어 업무를 수행합니다. 하지만 각 ET마다 과업 공지 및 리마인드 방식이 표준화되어 있지 않아, 스태프 개인이 수많은 채널을 모니터링하며 캘린더에 수기로 일정을 통합해야 하는 비효율이 발생해 왔습니다.
 
