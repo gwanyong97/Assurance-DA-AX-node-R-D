@@ -65,7 +65,10 @@ interface Props {
 
 export default function CalendarGrid({ onEditTask }: Props) {
   const { state, getTasksForDate, setSelectedDate } = useAppContext();
-  const [viewMonth, setViewMonth] = useState(new Date(2026, 4, 1)); // May 2026
+  const [viewMonth, setViewMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
