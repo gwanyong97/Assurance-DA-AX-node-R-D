@@ -34,10 +34,11 @@ export const INITIAL_ETS: ET[] = [
 ];
 
 export const INITIAL_TASKS: Task[] = [
-  // ── A전자 기말감사 (blue) ─────────────────────────────────────────
+  // ── A전자 기말감사 (blue) · 멤버: Gwany(user-1), 김지수(user-2) ──
   {
     id: 'task-01',
     etId: 'et-1',
+    assigneeId: 'user-1',
     title: '현금및현금성자산 명세서 작성',
     dueDate: '2026-05-02',
     status: 'Done',
@@ -48,6 +49,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-02',
     etId: 'et-1',
+    assigneeId: 'user-2',
     title: '은행조회서 발송',
     dueDate: '2026-05-07',
     status: 'Done',
@@ -58,6 +60,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-03',
     etId: 'et-1',
+    assigneeId: 'user-1',
     title: '매출채권 차이조정',
     dueDate: '2026-05-14',
     status: 'In Progress',
@@ -69,6 +72,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-04',
     etId: 'et-1',
+    assigneeId: 'user-2',
     title: '재고실사 참여',
     dueDate: '2026-05-19',
     status: 'To-Do',
@@ -79,6 +83,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-05',
     etId: 'et-1',
+    assigneeId: 'user-1',
     title: 'IFRS 15 수익인식 검토',
     dueDate: '2026-05-26',
     status: 'To-Do',
@@ -87,10 +92,11 @@ export const INITIAL_TASKS: Task[] = [
     timeSpent: 0,
   },
 
-  // ── B건설 반기검토 (rose) ─────────────────────────────────────────
+  // ── B건설 반기검토 (rose) · 멤버: 김지수(user-2), 박서연(user-3) ─
   {
     id: 'task-06',
     etId: 'et-2',
+    assigneeId: 'user-2',
     title: '공사수익 인식 검토',
     dueDate: '2026-05-06',
     status: 'Done',
@@ -101,6 +107,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-07',
     etId: 'et-2',
+    assigneeId: 'user-2',
     title: '특수관계자 거래 대조',
     dueDate: '2026-05-09',
     status: 'In Progress',
@@ -112,6 +119,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-08',
     etId: 'et-2',
+    assigneeId: 'user-3',
     title: '미완성주택 재고자산 실사',
     dueDate: '2026-05-15',
     status: 'To-Do',
@@ -122,6 +130,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-09',
     etId: 'et-2',
+    assigneeId: 'user-3',
     title: 'PF 우발채무 검토',
     dueDate: '2026-05-21',
     status: 'To-Do',
@@ -130,16 +139,18 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-10',
     etId: 'et-2',
+    assigneeId: 'user-2',
     title: '준공공사 정산 검토',
     dueDate: '2026-05-28',
     status: 'To-Do',
     description: '당기 준공 현장 최종 정산내역 검토 및 손익 귀속 적정성 확인',
   },
 
-  // ── C화학 PA (emerald) ────────────────────────────────────────────
+  // ── C화학 PA (emerald) · 멤버: Gwany(user-1), 박서연(user-3) ──────
   {
     id: 'task-11',
     etId: 'et-3',
+    assigneeId: 'user-1',
     title: '영업권 손상 검토',
     dueDate: '2026-05-08',
     status: 'Done',
@@ -150,6 +161,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-12',
     etId: 'et-3',
+    assigneeId: 'user-3',
     title: '취득원가 배분 (PPA) 작업',
     dueDate: '2026-05-13',
     status: 'In Progress',
@@ -160,6 +172,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-13',
     etId: 'et-3',
+    assigneeId: 'user-1',
     title: '재고자산 평가 조정',
     dueDate: '2026-05-20',
     status: 'To-Do',
@@ -170,16 +183,18 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-14',
     etId: 'et-3',
+    assigneeId: 'user-3',
     title: '환경부채 검토',
     dueDate: '2026-05-27',
     status: 'To-Do',
     description: '토양오염 복구 충당부채 추정 기초가정 합리성 검토',
   },
 
-  // ── D물산 내부회계 (violet) ───────────────────────────────────────
+  // ── D물산 내부회계 (violet) · 멤버: 김지수(user-2), 박서연(user-3) ─
   {
     id: 'task-15',
     etId: 'et-4',
+    assigneeId: 'user-2',
     title: 'ITGC 통제 테스트',
     dueDate: '2026-05-05',
     status: 'Done',
@@ -190,6 +205,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-16',
     etId: 'et-4',
+    assigneeId: 'user-3',
     title: '재무보고 프로세스 평가',
     dueDate: '2026-05-12',
     status: 'In Progress',
@@ -201,6 +217,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-17',
     etId: 'et-4',
+    assigneeId: 'user-2',
     title: 'IT 시스템 접근권한 검토',
     dueDate: '2026-05-22',
     status: 'To-Do',
@@ -211,16 +228,18 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-18',
     etId: 'et-4',
+    assigneeId: 'user-3',
     title: '내부회계관리제도 운영현황 평가',
     dueDate: '2026-05-29',
     status: 'To-Do',
     description: '중요 업무프로세스별 통제 운영 증빙 검토 및 미비점 집계',
   },
 
-  // ── E바이오 IPO컨토 (amber) ───────────────────────────────────────
+  // ── E바이오 IPO컨토 (amber) · 멤버: Gwany(user-1), 박서연(user-3) ─
   {
     id: 'task-19',
     etId: 'et-5',
+    assigneeId: 'user-1',
     title: '매출 Cut-off 테스트',
     dueDate: '2026-05-03',
     status: 'Done',
@@ -231,6 +250,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-20',
     etId: 'et-5',
+    assigneeId: 'user-3',
     title: '조세공과금 검토',
     dueDate: '2026-05-10',
     status: 'Review Clear 필요',
@@ -241,6 +261,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-21',
     etId: 'et-5',
+    assigneeId: 'user-1',
     title: 'R&D 비용 자본화 검토',
     dueDate: '2026-05-16',
     status: 'To-Do',
@@ -251,6 +272,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-22',
     etId: 'et-5',
+    assigneeId: 'user-3',
     title: '임상시험비 회계처리 검토',
     dueDate: '2026-05-23',
     status: 'To-Do',
@@ -261,6 +283,7 @@ export const INITIAL_TASKS: Task[] = [
   {
     id: 'task-23',
     etId: 'et-5',
+    assigneeId: 'user-1',
     title: '주식기준보상 검토',
     dueDate: '2026-05-30',
     status: 'To-Do',

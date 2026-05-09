@@ -180,44 +180,55 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   /**
    * Tasks for a specific date.
-   * Layer 1 — user scope:  task.etId ∈ currentUser.assignedEtIds
-   * Layer 2 — ET filter:   task.etId === activeEtFilter (when set)
+   * Team view (activeEtFilter set): ALL tasks for that ET, regardless of assignee.
+   * Personal view: only tasks assigned to currentUser within their ETs.
    */
   const getTasksForDate = useCallback(
     (date: string): Task[] => {
+      if (state.activeEtFilter) {
+        return state.tasks.filter(
+          (t) => t.dueDate === date && t.etId === state.activeEtFilter
+        );
+      }
       const myEtIds = state.currentUser.assignedEtIds;
       return state.tasks.filter(
         (t) =>
           t.dueDate === date &&
           myEtIds.includes(t.etId) &&
-          (state.activeEtFilter === null || t.etId === state.activeEtFilter)
+          (!t.assigneeId || t.assigneeId === state.currentUser.id)
       );
     },
-    [state.tasks, state.activeEtFilter, state.currentUser.assignedEtIds]
+    [state.tasks, state.activeEtFilter, state.currentUser]
   );
 
   /**
    * All tasks visible to the current user, sorted by dueDate.
-   * Applies the same two-layer filter as getTasksForDate.
+   * Team view: all tasks for the filtered ET.
+   * Personal view: only currentUser's assigned tasks across their ETs.
    */
   const getTasksFiltered = useCallback((): Task[] => {
+    if (state.activeEtFilter) {
+      return state.tasks
+        .filter((t) => t.etId === state.activeEtFilter)
+        .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+    }
     const myEtIds = state.currentUser.assignedEtIds;
     return state.tasks
       .filter(
         (t) =>
           myEtIds.includes(t.etId) &&
-          (state.activeEtFilter === null || t.etId === state.activeEtFilter)
+          (!t.assigneeId || t.assigneeId === state.currentUser.id)
       )
       .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
-  }, [state.tasks, state.activeEtFilter, state.currentUser.assignedEtIds]);
+  }, [state.tasks, state.activeEtFilter, state.currentUser]);
 
   /**
    * Non-Done tasks due within `limitDays` calendar days from today.
-   * Applies the same two-layer filter.
+   * Team view: all upcoming tasks for the filtered ET.
+   * Personal view: only currentUser's upcoming tasks.
    */
   const getUpcomingTasks = useCallback(
     (limitDays = 30): Task[] => {
-      const myEtIds = state.currentUser.assignedEtIds;
       const now = new Date();
       now.setHours(0, 0, 0, 0);
       const limit = new Date(now);
@@ -226,14 +237,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return state.tasks
         .filter((t) => {
           if (t.status === 'Done') return false;
-          if (!myEtIds.includes(t.etId)) return false;
-          if (state.activeEtFilter && t.etId !== state.activeEtFilter) return false;
           const due = new Date(t.dueDate);
-          return due >= now && due <= limit;
+          if (due < now || due > limit) return false;
+          if (state.activeEtFilter) return t.etId === state.activeEtFilter;
+          const myEtIds = state.currentUser.assignedEtIds;
+          return (
+            myEtIds.includes(t.etId) &&
+            (!t.assigneeId || t.assigneeId === state.currentUser.id)
+          );
         })
         .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
     },
-    [state.tasks, state.activeEtFilter, state.currentUser.assignedEtIds]
+    [state.tasks, state.activeEtFilter, state.currentUser]
   );
 
   return (

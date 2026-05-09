@@ -14,6 +14,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useAppContext } from '@/lib/store';
+import { MOCK_USERS } from '@/lib/mockData';
 import { Status, Task } from '@/lib/types';
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -62,11 +63,15 @@ interface TaskCardProps {
 }
 
 function TaskCard({ task, index }: TaskCardProps) {
-  const { getETById } = useAppContext();
+  const { getETById, state } = useAppContext();
   const et = getETById(task.etId);
   const { label, variant } = getDDay(task.dueDate);
   const isOverdue = variant === 'overdue';
   const isUrgent = task.urgent === true;
+  const isTeamView = state.activeEtFilter !== null;
+  const assignee = isTeamView && task.assigneeId
+    ? MOCK_USERS.find((u) => u.id === task.assigneeId)
+    : null;
 
   return (
     <motion.div
@@ -105,6 +110,14 @@ function TaskCard({ task, index }: TaskCardProps) {
         <span className="text-[10px] font-medium truncate" style={{ color: et?.color ?? '#94a3b8' }}>
           {et?.name ?? '–'}
         </span>
+        {assignee && (
+          <span className="flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[9px] font-semibold shrink-0">
+            <span className="w-3 h-3 rounded-full bg-slate-400 text-white flex items-center justify-center text-[7px] font-bold">
+              {assignee.name[0]}
+            </span>
+            {assignee.name}
+          </span>
+        )}
         <span className="ml-auto text-[10px] text-slate-400 shrink-0 flex items-center gap-0.5">
           <CalendarDays className="w-2.5 h-2.5" />
           {format(parseISO(task.dueDate), 'M/d')}

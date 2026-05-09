@@ -9,7 +9,8 @@ export interface ET {
 
 export interface Task {
   id: string;
-  etId: string;        // tasks belong to an ET, not an individual user
+  etId: string;
+  assigneeId?: string;  // user.id; undefined = unassigned
   title: string;
   dueDate: string;     // 'YYYY-MM-DD'
   status: Status;

@@ -15,6 +15,7 @@ import {
 } from 'date-fns';
 import { ChevronLeft, ChevronRight, Circle, CalendarX } from 'lucide-react';
 import { useAppContext } from '@/lib/store';
+import { MOCK_USERS } from '@/lib/mockData';
 import { Task } from '@/lib/types';
 
 const DOW_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
@@ -30,11 +31,16 @@ interface TaskChipProps {
 }
 
 function TaskChip({ task, color, onEdit }: TaskChipProps) {
+  const { state } = useAppContext();
   const isDone = task.status === 'Done';
   const isUrgent = task.urgent && !isDone;
+  const isTeamView = state.activeEtFilter !== null;
+  const assigneeInitial = isTeamView && task.assigneeId
+    ? (MOCK_USERS.find((u) => u.id === task.assigneeId)?.name[0] ?? null)
+    : null;
 
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Don't trigger day-cell selection
+    e.stopPropagation();
     onEdit(task);
   };
 
@@ -55,6 +61,11 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
       {isDone && <Circle className="w-2 h-2 shrink-0 opacity-60" strokeWidth={2.5} />}
       {isUrgent && <span className="shrink-0 leading-none">⭐</span>}
       <span className="truncate">{task.title}</span>
+      {assigneeInitial && (
+        <span className="shrink-0 w-3.5 h-3.5 rounded-full bg-white/30 text-[8px] font-bold flex items-center justify-center ml-auto">
+          {assigneeInitial}
+        </span>
+      )}
     </div>
   );
 }
