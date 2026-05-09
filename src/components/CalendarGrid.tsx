@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   startOfMonth,
   endOfMonth,
@@ -30,6 +30,8 @@ interface TaskChipProps {
   onEdit: (task: Task) => void;
 }
 
+interface TooltipPos { x: number; y: number }
+
 function TaskChip({ task, color, onEdit }: TaskChipProps) {
   const { state } = useAppContext();
   const isDone = task.status === 'Done';
@@ -38,35 +40,82 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
   const assigneeInitial = isTeamView && task.assigneeId
     ? (MOCK_USERS.find((u) => u.id === task.assigneeId)?.name[0] ?? null)
     : null;
+  const [tooltip, setTooltip] = useState<TooltipPos | null>(null);
+  const chipRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onEdit(task);
   };
 
+  const showTooltip = () => {
+    if (!task.comment || !chipRef.current) return;
+    const rect = chipRef.current.getBoundingClientRect();
+    setTooltip({ x: rect.left, y: rect.top });
+  };
+
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={handleClick}
-      onKeyDown={(e) => e.key === 'Enter' && onEdit(task)}
-      className="flex items-center gap-1 text-[10px] font-medium px-1.5 py-[3px] rounded-sm truncate leading-tight cursor-pointer hover:brightness-90 active:scale-95 transition-all"
-      style={{
-        backgroundColor: isDone ? `${color}28` : isUrgent ? '#EF4444' : color,
-        color: isDone ? color : '#fff',
-        outline: 'none',
-      }}
-      title={`${task.title} — 클릭하여 수정`}
-    >
-      {isDone && <Circle className="w-2 h-2 shrink-0 opacity-60" strokeWidth={2.5} />}
-      {isUrgent && <span className="shrink-0 leading-none">⭐</span>}
-      <span className="truncate">{task.title}</span>
-      {assigneeInitial && (
-        <span className="shrink-0 w-3.5 h-3.5 rounded-full bg-white/30 text-[8px] font-bold flex items-center justify-center ml-auto">
-          {assigneeInitial}
-        </span>
+    <>
+      <div
+        ref={chipRef}
+        role="button"
+        tabIndex={0}
+        onClick={handleClick}
+        onKeyDown={(e) => e.key === 'Enter' && onEdit(task)}
+        onMouseEnter={showTooltip}
+        onMouseLeave={() => setTooltip(null)}
+        className="relative flex items-center gap-1 text-[10px] font-medium px-1.5 py-[3px] rounded-sm leading-tight cursor-pointer hover:brightness-90 active:scale-95 transition-all overflow-hidden"
+        style={{
+          backgroundColor: isDone ? `${color}28` : isUrgent ? '#EF4444' : color,
+          color: isDone ? color : '#fff',
+          outline: 'none',
+        }}
+        title={task.comment ? undefined : `${task.title} — 클릭하여 수정`}
+      >
+        {isDone && <Circle className="w-2 h-2 shrink-0 opacity-60" strokeWidth={2.5} />}
+        {isUrgent && <span className="shrink-0 leading-none">⭐</span>}
+        <span className="truncate">{task.title}</span>
+        {assigneeInitial && (
+          <span className="shrink-0 w-3.5 h-3.5 rounded-full bg-white/30 text-[8px] font-bold flex items-center justify-center ml-auto">
+            {assigneeInitial}
+          </span>
+        )}
+        {/* 엑셀 메모 스타일 오렌지 삼각형 */}
+        {task.comment && (
+          <span
+            className="absolute top-0 right-0 w-0 h-0 pointer-events-none"
+            style={{
+              borderTop: '7px solid #fb923c',
+              borderLeft: '7px solid transparent',
+            }}
+          />
+        )}
+      </div>
+
+      {/* fixed 툴팁 — overflow:hidden 부모에 클리핑되지 않음 */}
+      {tooltip && task.comment && (
+        <div
+          className="pointer-events-none z-[200] fixed w-52 rounded-lg bg-slate-800 px-3 py-2.5 shadow-xl"
+          style={{ left: tooltip.x, top: tooltip.y - 8, transform: 'translateY(-100%)' }}
+        >
+          <p className="mb-1 text-[9px] font-bold uppercase tracking-wider text-orange-300">
+            💬 KM/PM 코멘트
+          </p>
+          <p className="text-[11px] leading-relaxed text-slate-200 whitespace-pre-wrap">
+            {task.comment}
+          </p>
+          {/* 아래 화살표 */}
+          <span
+            className="absolute left-3 bottom-0 translate-y-full w-0 h-0"
+            style={{
+              borderLeft: '5px solid transparent',
+              borderRight: '5px solid transparent',
+              borderTop: '5px solid #1e293b',
+            }}
+          />
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

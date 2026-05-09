@@ -18,6 +18,7 @@ export interface Task {
   urgent?: boolean;
   timeBudget?: number;
   timeSpent?: number;
+  comment?: string;     // KM/PM 코멘트
 }
 
 export interface User {

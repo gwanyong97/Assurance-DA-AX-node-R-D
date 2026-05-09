@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Loader2, Star } from 'lucide-react';
+import { Plus, Loader2, Star, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -32,6 +32,7 @@ interface FormState {
   urgent: boolean;
   timeBudget: string;
   timeSpent: string;
+  comment: string;
 }
 
 const BLANK_FORM: FormState = {
@@ -43,6 +44,7 @@ const BLANK_FORM: FormState = {
   urgent: false,
   timeBudget: '',
   timeSpent: '',
+  comment: '',
 };
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
@@ -80,6 +82,7 @@ export default function AddTaskDialog() {
         ...form,
         title: form.title.trim(),
         description: form.description.trim(),
+        comment: form.comment.trim() || undefined,
         timeBudget: form.timeBudget !== '' ? Number(form.timeBudget) : undefined,
         timeSpent: form.timeSpent !== '' ? Number(form.timeSpent) : undefined,
       });
@@ -258,6 +261,21 @@ export default function AddTaskDialog() {
                   className="text-sm"
                 />
               </div>
+            </div>
+
+            {/* KM/PM 코멘트 */}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs font-semibold flex items-center gap-1.5">
+                <MessageSquare className="w-3.5 h-3.5 text-orange-400" />
+                KM/PM 코멘트 <span className="text-slate-400 font-normal">(선택)</span>
+              </Label>
+              <textarea
+                value={form.comment}
+                onChange={(e) => setForm((f) => ({ ...f, comment: e.target.value }))}
+                placeholder="캘린더에서 마우스를 올리면 표시됩니다..."
+                rows={2}
+                className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-slate-400"
+              />
             </div>
 
             {/* Urgent toggle */}
