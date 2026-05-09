@@ -5,10 +5,37 @@ import {
   useContext,
   useReducer,
   useCallback,
+  useEffect,
   ReactNode,
 } from 'react';
 import { AppAction, AppState, ET, Task, User } from './types';
 import { INITIAL_ETS, INITIAL_TASKS, DEFAULT_USER } from './mockData';
+
+// ── localStorage persistence ──────────────────────────────────────────────────
+
+const STORAGE_KEY = 'et-calendar-state';
+
+function loadPersistedState(): Pick<AppState, 'ets' | 'tasks' | 'currentUser'> | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function buildInitialState(): AppState {
+  const persisted = loadPersistedState();
+  return {
+    ets: persisted?.ets ?? INITIAL_ETS,
+    tasks: persisted?.tasks ?? INITIAL_TASKS,
+    currentUser: persisted?.currentUser ?? DEFAULT_USER,
+    activeEtFilter: null,
+    selectedDate: null,
+  };
+}
 
 // ── Reducer ───────────────────────────────────────────────────────────────────
 
@@ -55,15 +82,6 @@ function appReducer(state: AppState, action: AppAction): AppState {
   }
 }
 
-// ── Initial State ─────────────────────────────────────────────────────────────
-
-const initialState: AppState = {
-  ets: INITIAL_ETS,
-  tasks: INITIAL_TASKS,
-  currentUser: DEFAULT_USER,
-  activeEtFilter: null,
-  selectedDate: null,
-};
 
 // ── Context ───────────────────────────────────────────────────────────────────
 
@@ -95,7 +113,18 @@ const AppContext = createContext<AppContextValue | null>(null);
 // ── Provider ──────────────────────────────────────────────────────────────────
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [state, dispatch] = useReducer(appReducer, undefined, buildInitialState);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ets: state.ets, tasks: state.tasks, currentUser: state.currentUser })
+      );
+    } catch {
+      // storage quota exceeded — silently ignore
+    }
+  }, [state.ets, state.tasks, state.currentUser]);
 
   // ── Task actions ────────────────────────────────────────────────────────────
 
