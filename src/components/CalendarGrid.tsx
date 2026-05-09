@@ -31,6 +31,7 @@ interface TaskChipProps {
 
 function TaskChip({ task, color, onEdit }: TaskChipProps) {
   const isDone = task.status === 'Done';
+  const isUrgent = task.urgent && !isDone;
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Don't trigger day-cell selection
@@ -45,13 +46,14 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
       onKeyDown={(e) => e.key === 'Enter' && onEdit(task)}
       className="flex items-center gap-1 text-[10px] font-medium px-1.5 py-[3px] rounded-sm truncate leading-tight cursor-pointer hover:brightness-90 active:scale-95 transition-all"
       style={{
-        backgroundColor: isDone ? `${color}28` : color,
+        backgroundColor: isDone ? `${color}28` : isUrgent ? '#EF4444' : color,
         color: isDone ? color : '#fff',
         outline: 'none',
       }}
       title={`${task.title} — 클릭하여 수정`}
     >
       {isDone && <Circle className="w-2 h-2 shrink-0 opacity-60" strokeWidth={2.5} />}
+      {isUrgent && <span className="shrink-0 leading-none">⭐</span>}
       <span className="truncate">{task.title}</span>
     </div>
   );

@@ -1,4 +1,4 @@
-export type Status = 'To-Do' | 'In Progress' | 'Done';
+export type Status = 'To-Do' | 'In Progress' | 'Done' | 'Review Clear 필요';
 
 export interface ET {
   id: string;
@@ -14,6 +14,7 @@ export interface Task {
   dueDate: string;     // 'YYYY-MM-DD'
   status: Status;
   description?: string;
+  urgent?: boolean;
 }
 
 export interface User {

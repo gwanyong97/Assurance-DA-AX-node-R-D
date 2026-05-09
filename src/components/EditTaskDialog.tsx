@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Trash2 } from 'lucide-react';
+import { Loader2, Trash2, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -29,12 +29,14 @@ interface FormState {
   dueDate: string;
   status: Status;
   description: string;
+  urgent: boolean;
 }
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
   { value: 'To-Do', label: 'To-Do', color: 'text-slate-500' },
   { value: 'In Progress', label: 'In Progress', color: 'text-blue-500' },
   { value: 'Done', label: 'Done', color: 'text-emerald-500' },
+  { value: 'Review Clear 필요', label: 'Review Clear 필요', color: 'text-amber-500' },
 ];
 
 interface Props {
@@ -50,6 +52,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
     dueDate: '',
     status: 'To-Do',
     description: '',
+    urgent: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -64,6 +67,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         dueDate: task.dueDate,
         status: task.status,
         description: task.description ?? '',
+        urgent: task.urgent ?? false,
       });
       setErrors({});
       setConfirmDelete(false);
@@ -222,6 +226,33 @@ export default function EditTaskDialog({ task, onClose }: Props) {
               placeholder="추가 업무 설명..."
               className="text-sm"
             />
+          </div>
+
+          {/* Urgent toggle */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              role="switch"
+              aria-checked={form.urgent}
+              onClick={() => setForm((f) => ({ ...f, urgent: !f.urgent }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-[11px] font-semibold transition-all ${
+                form.urgent
+                  ? 'bg-red-50 border-red-300 text-red-600'
+                  : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'
+              }`}
+            >
+              <Star
+                className={`w-3.5 h-3.5 transition-all ${
+                  form.urgent ? 'fill-red-500 text-red-500' : 'text-slate-400'
+                }`}
+              />
+              긴급 업무로 표시
+            </button>
+            {form.urgent && (
+              <span className="text-[11px] text-red-500 font-medium">
+                캘린더에 빨간색, 사이드바 상단에 고정됩니다
+              </span>
+            )}
           </div>
 
           <DialogFooter className="mt-2 flex-col sm:flex-row gap-2">

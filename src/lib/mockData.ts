@@ -57,6 +57,7 @@ export const INITIAL_TASKS: Task[] = [
     title: '매출채권 차이조정',
     dueDate: '2026-05-14',
     status: 'In Progress',
+    urgent: true,
     description: '외부조회 회신 결과와 장부 잔액 간 차이 원인 분석',
   },
   {
@@ -91,6 +92,7 @@ export const INITIAL_TASKS: Task[] = [
     title: '특수관계자 거래 대조',
     dueDate: '2026-05-09',
     status: 'In Progress',
+    urgent: true,
     description: '계열사 간 내부거래 내역 식별 및 시장가격 비교 분석',
   },
   {
@@ -167,6 +169,7 @@ export const INITIAL_TASKS: Task[] = [
     title: '재무보고 프로세스 평가',
     dueDate: '2026-05-12',
     status: 'In Progress',
+    urgent: true,
     description: '결산·공시 프로세스 내 핵심통제 운영현황 평가',
   },
   {
@@ -200,7 +203,7 @@ export const INITIAL_TASKS: Task[] = [
     etId: 'et-5',
     title: '조세공과금 검토',
     dueDate: '2026-05-10',
-    status: 'In Progress',
+    status: 'Review Clear 필요',
     description: '이연법인세 계산 적정성 및 세무조정 항목 검토',
   },
   {
