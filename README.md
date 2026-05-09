@@ -52,35 +52,19 @@ After  │ 통합 캘린더 → 자동 우선순위 → 팀 부하 시각화 →
 
 ---
 
-## 스크린샷
+## Details
 
-<details>
-<summary>개인 뷰 — 내가 담당한 ET 업무만 통합 표시</summary>
-
+### 개인 뷰 — 내가 담당한 ET 업무만 통합 표시
 ![개인 뷰](public/screenshot1.png)
 
-</details>
-
-<details>
-<summary>팀 전체 뷰 — ET 탭 클릭 시 팀원 전체 업무 및 부하 현황 표시</summary>
-
+### 팀 전체 뷰 — ET 탭 클릭 시 팀원 전체 업무 및 부하 현황 표시
 ![팀 전체 뷰](public/screenshot2.png)
 
-</details>
-
-<details>
-<summary>업무 수정 — KM/PM 코멘트 입력 (캘린더 마우스 오버 시 툴팁 표시)</summary>
-
+### 업무 수정 — KM/PM 코멘트 입력 (캘린더 마우스 오버 시 툴팁 표시)
 ![업무 수정 다이얼로그](public/screenshot3.png)
 
-</details>
-
-<details>
-<summary>다크 모드 — 헤더 Moon/Sun 버튼으로 전환, 설정 자동 저장</summary>
-
+### 다크 모드 — 헤더 Moon/Sun 버튼으로 전환, 설정 자동 저장
 ![다크 모드](public/screenshot4.png)
-
-</details>
 
 ---
 
