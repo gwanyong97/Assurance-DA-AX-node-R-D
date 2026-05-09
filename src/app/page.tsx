@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import EtProgressDashboard from '@/components/EtProgressDashboard';
+import EtWorkloadPanel from '@/components/EtWorkloadPanel';
 import CalendarGrid from '@/components/CalendarGrid';
 import TaskSidebar from '@/components/TaskSidebar';
 import AddTaskDialog from '@/components/AddTaskDialog';
@@ -17,6 +18,7 @@ export default function Home() {
       {/* ── Top chrome ───────────────────────────────────────────────── */}
       <Header />
       <EtProgressDashboard />
+      <EtWorkloadPanel />
 
       {/* ── Main split view ──────────────────────────────────────────── */}
       <main className="flex flex-1 overflow-hidden">

@@ -36,6 +36,12 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
   const { state } = useAppContext();
   const isDone = task.status === 'Done';
   const isUrgent = task.urgent && !isDone;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const daysUntilDue = Math.ceil(
+    (new Date(task.dueDate).getTime() - today.getTime()) / 86_400_000
+  );
+  const isImminent = !isDone && !isUrgent && daysUntilDue >= 0 && daysUntilDue <= 3;
   const isTeamView = state.activeEtFilter !== null;
   const assigneeInitial = isTeamView && task.assigneeId
     ? (MOCK_USERS.find((u) => u.id === task.assigneeId)?.name[0] ?? null)
@@ -69,6 +75,7 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
           backgroundColor: isDone ? `${color}28` : isUrgent ? '#EF4444' : color,
           color: isDone ? color : '#fff',
           outline: 'none',
+          boxShadow: isImminent ? '0 0 0 2px #fb923c' : undefined,
         }}
         title={task.comment ? undefined : `${task.title} — 클릭하여 수정`}
       >
