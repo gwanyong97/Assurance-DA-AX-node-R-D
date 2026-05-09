@@ -19,6 +19,7 @@ export interface Task {
   timeBudget?: number;
   timeSpent?: number;
   comment?: string;     // KM/PM 코멘트
+  pending?: string;     // Pending 사항 (담당자 메모)
 }
 
 export interface User {

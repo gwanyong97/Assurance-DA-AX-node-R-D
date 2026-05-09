@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Trash2, Star, MessageSquare } from 'lucide-react';
+import { Loader2, Trash2, Star, MessageSquare, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -33,6 +33,7 @@ interface FormState {
   timeBudget: string;
   timeSpent: string;
   comment: string;
+  pending: string;
 }
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
@@ -59,6 +60,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
     timeBudget: '',
     timeSpent: '',
     comment: '',
+    pending: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -77,6 +79,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         timeBudget: task.timeBudget != null ? String(task.timeBudget) : '',
         timeSpent: task.timeSpent != null ? String(task.timeSpent) : '',
         comment: task.comment ?? '',
+        pending: task.pending ?? '',
       });
       setErrors({});
       setConfirmDelete(false);
@@ -106,6 +109,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         title: form.title.trim(),
         description: form.description.trim(),
         comment: form.comment.trim() || undefined,
+        pending: form.pending.trim() || undefined,
         timeBudget: form.timeBudget !== '' ? Number(form.timeBudget) : undefined,
         timeSpent: form.timeSpent !== '' ? Number(form.timeSpent) : undefined,
       });
@@ -284,6 +288,21 @@ export default function EditTaskDialog({ task, onClose }: Props) {
               placeholder="캘린더에서 마우스를 올리면 표시됩니다..."
               rows={2}
               className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-slate-400"
+            />
+          </div>
+
+          {/* Pending 사항 */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs font-semibold flex items-center gap-1.5">
+              <ClipboardList className="w-3.5 h-3.5 text-yellow-500" />
+              Pending 사항 <span className="text-slate-400 font-normal">(선택)</span>
+            </Label>
+            <textarea
+              value={form.pending}
+              onChange={(e) => setForm((f) => ({ ...f, pending: e.target.value }))}
+              placeholder="확인 필요 사항, 대기 중인 항목 등을 입력하세요..."
+              rows={2}
+              className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 placeholder:text-slate-400"
             />
           </div>
 

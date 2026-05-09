@@ -13,6 +13,7 @@ import {
   Star,
   AlertCircle,
   MessageSquare,
+  ClipboardList,
 } from 'lucide-react';
 import { useAppContext } from '@/lib/store';
 import { MOCK_USERS } from '@/lib/mockData';
@@ -130,6 +131,14 @@ function TaskCard({ task, index }: TaskCardProps) {
         <div className="mt-2 pl-5 flex items-start gap-1.5 bg-orange-50 border border-orange-200 rounded-md px-2 py-1.5">
           <MessageSquare className="w-3 h-3 text-orange-400 shrink-0 mt-0.5" />
           <p className="text-[10px] text-orange-700 leading-relaxed whitespace-pre-wrap">{task.comment}</p>
+        </div>
+      )}
+
+      {/* Pending 사항 */}
+      {task.pending && (
+        <div className="mt-2 pl-5 flex items-start gap-1.5 bg-yellow-50 border border-yellow-200 rounded-md px-2 py-1.5">
+          <ClipboardList className="w-3 h-3 text-yellow-500 shrink-0 mt-0.5" />
+          <p className="text-[10px] text-yellow-800 leading-relaxed whitespace-pre-wrap">{task.pending}</p>
         </div>
       )}
 

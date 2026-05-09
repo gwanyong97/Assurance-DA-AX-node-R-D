@@ -87,13 +87,23 @@ function TaskChip({ task, color, onEdit }: TaskChipProps) {
             {assigneeInitial}
           </span>
         )}
-        {/* 엑셀 메모 스타일 오렌지 삼각형 */}
+        {/* 오렌지 삼각형 — KM/PM 코멘트 */}
         {task.comment && (
           <span
             className="absolute top-0 right-0 w-0 h-0 pointer-events-none"
             style={{
               borderTop: '7px solid #fb923c',
               borderLeft: '7px solid transparent',
+            }}
+          />
+        )}
+        {/* 노란 삼각형 — Pending 사항 */}
+        {task.pending && (
+          <span
+            className="absolute bottom-0 left-0 w-0 h-0 pointer-events-none"
+            style={{
+              borderBottom: '7px solid #eab308',
+              borderRight: '7px solid transparent',
             }}
           />
         )}
