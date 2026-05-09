@@ -14,13 +14,16 @@ import { INITIAL_ETS, INITIAL_TASKS, DEFAULT_USER } from './mockData';
 // ── localStorage persistence ──────────────────────────────────────────────────
 
 const STORAGE_KEY = 'et-calendar-state';
+const STORAGE_VERSION = 2; // bump when data shape changes to bust stale cache
 
 function loadPersistedState(): Pick<AppState, 'ets' | 'tasks' | 'currentUser'> | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (parsed.version !== STORAGE_VERSION) return null;
+    return parsed;
   } catch {
     return null;
   }
@@ -119,7 +122,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ ets: state.ets, tasks: state.tasks, currentUser: state.currentUser })
+        JSON.stringify({ version: STORAGE_VERSION, ets: state.ets, tasks: state.tasks, currentUser: state.currentUser })
       );
     } catch {
       // storage quota exceeded — silently ignore
