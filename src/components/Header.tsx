@@ -1,13 +1,15 @@
 'use client';
 
-import { CalendarCheck2, ChevronDown, Users } from 'lucide-react';
+import { CalendarCheck2, ChevronDown, Users, Moon, Sun } from 'lucide-react';
 import { useAppContext } from '@/lib/store';
 import { MOCK_USERS } from '@/lib/mockData';
+import { useTheme } from '@/lib/theme';
 import { useState } from 'react';
 
 export default function Header() {
   const { state, setEtFilter, setCurrentUser, getMyETs } = useAppContext();
   const { activeEtFilter, currentUser } = state;
+  const { theme, toggle: toggleTheme } = useTheme();
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const myETs = getMyETs();
@@ -113,6 +115,20 @@ export default function Header() {
           <p className="text-sm font-bold text-red-500 mt-0.5">{dueThisWeek}건</p>
         </div>
       </div>
+
+      <div className="h-6 w-px bg-slate-200 shrink-0" />
+
+      {/* ── Theme Toggle ─────────────────────────────────────────────── */}
+      <button
+        onClick={toggleTheme}
+        aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
+        className="shrink-0 p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"
+      >
+        {theme === 'dark'
+          ? <Sun className="w-4 h-4" />
+          : <Moon className="w-4 h-4" />
+        }
+      </button>
 
       <div className="h-6 w-px bg-slate-200 shrink-0" />
 
