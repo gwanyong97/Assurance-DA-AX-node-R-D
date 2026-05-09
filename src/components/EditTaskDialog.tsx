@@ -22,7 +22,6 @@ import {
 } from '@/components/ui/select';
 import { useAppContext } from '@/lib/store';
 import { Task, Status } from '@/lib/types';
-import { MOCK_USERS } from '@/lib/mockData';
 
 interface FormState {
   etId: string;
@@ -132,7 +131,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
 
   const selectedET = state.ets.find((e) => e.id === form.etId);
   const etMembers = form.etId
-    ? MOCK_USERS.filter((u) => u.assignedEtIds.includes(form.etId))
+    ? state.users.filter((u) => u.assignedEtIds.includes(form.etId))
     : [];
 
   return (
@@ -166,7 +165,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
               value={form.etId || null}
               onValueChange={(v) => {
                 const newEtId = v ?? '';
-                const newMembers = MOCK_USERS.filter((u) => u.assignedEtIds.includes(newEtId));
+                const newMembers = state.users.filter((u) => u.assignedEtIds.includes(newEtId));
                 setForm((f) => ({
                   ...f,
                   etId: newEtId,

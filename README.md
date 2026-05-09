@@ -77,7 +77,42 @@ After  │ 통합 캘린더 → 자동 우선순위 → 팀 부하 시각화 →
 | **Styling** | Tailwind CSS v4, shadcn/ui |
 | **Animation** | Framer Motion |
 | **State** | useReducer + Context API + localStorage |
+| **DnD** | @dnd-kit/core |
 | **Deploy** | Vercel (GitHub 자동 배포) |
+
+---
+
+## 아키텍처
+
+### 컴포넌트 트리
+
+```
+app/page.tsx
+├── Header.tsx              — ET 필터 탭 · 유저 스위처 · 다크모드 · ET/팀원 추가 버튼
+│   ├── AddETDialog.tsx     — 신규 ET 추가 (색상 프리셋 16종)
+│   └── AddUserDialog.tsx   — 신규 팀원 추가 (ET 소속 다중 선택)
+├── EtProgressDashboard.tsx — 상단 ET별 진행률 바
+├── EtWorkloadPanel.tsx     — ET 선택 시 팀원별 부하 현황 (슬라이드다운)
+├── CalendarGrid.tsx        — 월간 캘린더 + 드래그앤드롭으로 날짜 이동
+├── TaskSidebar.tsx         — Upcoming Tasks · 선택일 업무 · 실시간 검색
+├── AddTaskDialog.tsx       — 업무 추가 FAB 버튼
+├── EditTaskDialog.tsx      — 업무 수정/삭제 (담당자·Pending 포함)
+└── DeadlineNotifier.tsx    — D-Day·D-1 브라우저 알림 (렌더 없음)
+```
+
+### 상태 관리 흐름
+
+```
+AppProvider (useReducer + Context API)
+  ├── state.ets         — ET 목록 (localStorage 영속)
+  ├── state.tasks       — 업무 목록 (localStorage 영속)
+  ├── state.users       — 팀원 목록 (localStorage 영속)
+  ├── state.currentUser — 현재 사용자 (localStorage 영속)
+  ├── state.activeEtFilter  — 선택된 ET 필터 (null = 내 전체 ET)
+  └── state.selectedDate    — 캘린더 클릭일
+```
+
+> localStorage 키: `et-calendar-state` (STORAGE_VERSION=7, 버전 불일치 시 mockData 초기화)
 
 ---
 

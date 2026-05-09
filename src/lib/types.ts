@@ -32,6 +32,7 @@ export interface User {
 export interface AppState {
   ets: ET[];
   tasks: Task[];
+  users: User[];               // all team members (persisted)
   currentUser: User;           // drives the "my ETs" base filter
   activeEtFilter: string | null; // secondary filter within current user's ETs
   selectedDate: string | null;
@@ -42,6 +43,7 @@ export type AppAction =
   | { type: 'EDIT_TASK'; payload: Task }
   | { type: 'DELETE_TASK'; payload: { id: string } }
   | { type: 'ADD_ET'; payload: ET }
+  | { type: 'ADD_USER'; payload: User }
   | { type: 'SET_CURRENT_USER'; payload: User }       // resets activeEtFilter
   | { type: 'SET_ET_FILTER'; payload: string | null }
   | { type: 'SET_SELECTED_DATE'; payload: string | null };

@@ -9,14 +9,14 @@ import {
   ReactNode,
 } from 'react';
 import { AppAction, AppState, ET, Task, User } from './types';
-import { INITIAL_ETS, INITIAL_TASKS, DEFAULT_USER } from './mockData';
+import { INITIAL_ETS, INITIAL_TASKS, MOCK_USERS, DEFAULT_USER } from './mockData';
 
 // ── localStorage persistence ──────────────────────────────────────────────────
 
 const STORAGE_KEY = 'et-calendar-state';
-const STORAGE_VERSION = 6; // bump when data shape changes to bust stale cache
+const STORAGE_VERSION = 7; // bump when data shape changes to bust stale cache
 
-function loadPersistedState(): Pick<AppState, 'ets' | 'tasks' | 'currentUser'> | null {
+function loadPersistedState(): Pick<AppState, 'ets' | 'tasks' | 'users' | 'currentUser'> | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -34,6 +34,7 @@ function buildInitialState(): AppState {
   return {
     ets: persisted?.ets ?? INITIAL_ETS,
     tasks: persisted?.tasks ?? INITIAL_TASKS,
+    users: persisted?.users ?? MOCK_USERS,
     currentUser: persisted?.currentUser ?? DEFAULT_USER,
     activeEtFilter: null,
     selectedDate: null,
@@ -63,6 +64,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
     case 'ADD_ET':
       return { ...state, ets: [...state.ets, action.payload] };
+
+    case 'ADD_USER':
+      return { ...state, users: [...state.users, action.payload] };
 
     case 'SET_CURRENT_USER':
       // Switching users resets the active ET filter so stale selections don't
@@ -97,6 +101,7 @@ interface AppContextValue {
   // ET actions
   addET: (et: Omit<ET, 'id'>) => void;
   // User actions
+  addUser: (user: Omit<User, 'id'>) => void;
   setCurrentUser: (user: User) => void;
   // Filter / navigation
   setEtFilter: (etId: string | null) => void;
@@ -122,12 +127,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ version: STORAGE_VERSION, ets: state.ets, tasks: state.tasks, currentUser: state.currentUser })
+        JSON.stringify({
+          version: STORAGE_VERSION,
+          ets: state.ets,
+          tasks: state.tasks,
+          users: state.users,
+          currentUser: state.currentUser,
+        })
       );
     } catch {
       // storage quota exceeded — silently ignore
     }
-  }, [state.ets, state.tasks, state.currentUser]);
+  }, [state.ets, state.tasks, state.users, state.currentUser]);
 
   // ── Task actions ────────────────────────────────────────────────────────────
 
@@ -150,6 +161,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // ── User actions ────────────────────────────────────────────────────────────
+
+  const addUser = useCallback((user: Omit<User, 'id'>) => {
+    dispatch({ type: 'ADD_USER', payload: { ...user, id: `user-${Date.now()}` } });
+  }, []);
 
   const setCurrentUser = useCallback((user: User) => {
     dispatch({ type: 'SET_CURRENT_USER', payload: user });
@@ -262,6 +277,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         editTask,
         deleteTask,
         addET,
+        addUser,
         setCurrentUser,
         setEtFilter,
         setSelectedDate,
