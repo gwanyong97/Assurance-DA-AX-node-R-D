@@ -15,6 +15,9 @@
 ### 업무 수정 — KM/PM 코멘트 입력 (캘린더 마우스 오버 시 툴팁 표시)
 ![업무 수정 다이얼로그](public/screenshot3.png)
 
+### 다크 모드 — 헤더 Moon/Sun 버튼으로 전환, 설정 자동 저장
+![다크 모드](public/screenshot4.png)
+
 ---
 
 ## 주요 기능
