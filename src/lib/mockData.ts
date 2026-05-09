@@ -31,6 +31,48 @@ export const INITIAL_ETS: ET[] = [
     color: '#F59E0B',
     colorLight: '#FFFBEB',
   },
+  {
+    id: 'et-6',
+    name: 'F유통 기말감사',
+    color: '#06B6D4',
+    colorLight: '#ECFEFF',
+  },
+  {
+    id: 'et-7',
+    name: 'G금융 특수감사',
+    color: '#EC4899',
+    colorLight: '#FDF2F8',
+  },
+  {
+    id: 'et-8',
+    name: 'H에너지 반기검토',
+    color: '#84CC16',
+    colorLight: '#F7FEE7',
+  },
+  {
+    id: 'et-9',
+    name: 'I제약 기말감사',
+    color: '#6366F1',
+    colorLight: '#EEF2FF',
+  },
+  {
+    id: 'et-10',
+    name: 'J건설 내부회계',
+    color: '#F97316',
+    colorLight: '#FFF7ED',
+  },
+  {
+    id: 'et-11',
+    name: 'K전자 IFRS전환',
+    color: '#14B8A6',
+    colorLight: '#F0FDFA',
+  },
+  {
+    id: 'et-12',
+    name: 'L그룹 연결감사',
+    color: '#DC2626',
+    colorLight: '#FEF2F2',
+  },
 ];
 
 export const INITIAL_TASKS: Task[] = [
@@ -289,6 +331,187 @@ export const INITIAL_TASKS: Task[] = [
     status: 'To-Do',
     description: '스톡옵션 공정가치 산정 모형(Black-Scholes) 및 가득조건 검토',
   },
+
+  // ── F유통 기말감사 (cyan) · 멤버: 신관용(user-1), 박서연(user-3) ──
+  {
+    id: 'task-24',
+    etId: 'et-6',
+    assigneeId: 'user-1',
+    title: '재고자산 실사 참여',
+    dueDate: '2026-05-12',
+    status: 'To-Do',
+    description: '김포 물류센터 상품 실사 참여 및 실사조서 작성',
+    timeBudget: 8,
+    timeSpent: 0,
+  },
+  {
+    id: 'task-25',
+    etId: 'et-6',
+    assigneeId: 'user-3',
+    title: '매출 확인서 발송',
+    dueDate: '2026-05-18',
+    status: 'In Progress',
+    description: '주요 거래처 20개사 대상 매출채권 외부확인 발송 및 회신 관리',
+    timeBudget: 6,
+    timeSpent: 3,
+  },
+  {
+    id: 'task-26',
+    etId: 'et-6',
+    assigneeId: 'user-1',
+    title: '상품매입 Cut-off 테스트',
+    dueDate: '2026-05-27',
+    status: 'To-Do',
+    description: '기말 전후 입고기록과 세금계산서 수취일 대사를 통한 기간귀속 검증',
+    timeBudget: 5,
+    timeSpent: 0,
+  },
+
+  // ── G금융 특수감사 (pink) · 멤버: 김지수(user-2), 박서연(user-3) ──
+  {
+    id: 'task-27',
+    etId: 'et-7',
+    assigneeId: 'user-2',
+    title: '금융상품 공정가치 평가 검토',
+    dueDate: '2026-05-14',
+    status: 'To-Do',
+    description: 'Level 2·3 금융상품 외부평가기관 보고서 적정성 검토',
+    timeBudget: 10,
+    timeSpent: 0,
+  },
+  {
+    id: 'task-28',
+    etId: 'et-7',
+    assigneeId: 'user-3',
+    title: 'AML 내부통제 평가',
+    dueDate: '2026-05-22',
+    status: 'To-Do',
+    description: '자금세탁방지 프로세스 설계·운영 효과성 평가 및 취약점 보고',
+    timeBudget: 12,
+    timeSpent: 0,
+  },
+
+  // ── H에너지 반기검토 (lime) · 멤버: 신관용(user-1), 박서연(user-3) ──
+  {
+    id: 'task-29',
+    etId: 'et-8',
+    assigneeId: 'user-1',
+    title: '원가명세서 검토',
+    dueDate: '2026-05-11',
+    status: 'In Progress',
+    urgent: true,
+    description: '제조원가명세서 항목별 전기 대비 증감 분석 및 이상치 검토',
+    timeBudget: 8,
+    timeSpent: 5,
+  },
+  {
+    id: 'task-30',
+    etId: 'et-8',
+    assigneeId: 'user-3',
+    title: '유형자산 내역 검토',
+    dueDate: '2026-05-25',
+    status: 'To-Do',
+    description: '발전설비 자본적지출·수익적지출 구분 적정성 및 감가상각 검토',
+    timeBudget: 10,
+    timeSpent: 0,
+  },
+
+  // ── I제약 기말감사 (indigo) · 멤버: 신관용(user-1), 김지수(user-2) ──
+  {
+    id: 'task-31',
+    etId: 'et-9',
+    assigneeId: 'user-1',
+    title: '임상비용 회계처리 검토',
+    dueDate: '2026-05-16',
+    status: 'To-Do',
+    description: 'CRO 계약 기반 단계별 임상비 발생주의 적용 및 선급금 정산 검토',
+    timeBudget: 8,
+    timeSpent: 0,
+  },
+  {
+    id: 'task-32',
+    etId: 'et-9',
+    assigneeId: 'user-2',
+    title: '특수관계자 거래 검토',
+    dueDate: '2026-05-23',
+    status: 'To-Do',
+    description: '계열 제조사 간 원료 공급 내부거래 시장가격 비교 및 공시 적정성 검토',
+    timeBudget: 6,
+    timeSpent: 0,
+  },
+
+  // ── J건설 내부회계 (orange) · 멤버: 김지수(user-2), 박서연(user-3) ──
+  {
+    id: 'task-33',
+    etId: 'et-10',
+    assigneeId: 'user-2',
+    title: 'IT 접근통제 테스트',
+    dueDate: '2026-05-19',
+    status: 'To-Do',
+    description: 'ERP 시스템 접근권한 설정 및 권한 분리 운영 효과성 평가',
+    timeBudget: 6,
+    timeSpent: 0,
+  },
+  {
+    id: 'task-34',
+    etId: 'et-10',
+    assigneeId: 'user-3',
+    title: '공사원가 프로세스 평가',
+    dueDate: '2026-05-27',
+    status: 'To-Do',
+    description: '현장별 원가집계 프로세스 핵심통제 운영현황 평가 및 미비점 집계',
+    timeBudget: 10,
+    timeSpent: 0,
+  },
+
+  // ── K전자 IFRS전환 (teal) · 멤버: 김지수(user-2), 박서연(user-3) ──
+  {
+    id: 'task-35',
+    etId: 'et-11',
+    assigneeId: 'user-2',
+    title: 'IFRS 16 리스 전환 검토',
+    dueDate: '2026-05-20',
+    status: 'In Progress',
+    urgent: true,
+    description: '운용리스 사용권자산·리스부채 최초 인식 계산 적정성 검토',
+    timeBudget: 14,
+    timeSpent: 8,
+  },
+  {
+    id: 'task-36',
+    etId: 'et-11',
+    assigneeId: 'user-3',
+    title: '비교재무제표 재작성 검토',
+    dueDate: '2026-05-28',
+    status: 'To-Do',
+    description: 'K-GAAP → IFRS 전환 조정사항 반영 비교 재무제표 정합성 검토',
+    timeBudget: 12,
+    timeSpent: 0,
+  },
+
+  // ── L그룹 연결감사 (red) · 멤버: 박서연(user-3) ─────────────────
+  {
+    id: 'task-37',
+    etId: 'et-12',
+    assigneeId: 'user-3',
+    title: '연결조정분개 검토',
+    dueDate: '2026-05-17',
+    status: 'In Progress',
+    description: '종속회사 내부거래 상계 및 미실현손익 제거 조정분개 적정성 검토',
+    timeBudget: 16,
+    timeSpent: 7,
+  },
+  {
+    id: 'task-38',
+    etId: 'et-12',
+    assigneeId: 'user-3',
+    title: '내부거래 상계 검토',
+    dueDate: '2026-05-24',
+    status: 'To-Do',
+    description: '그룹 내 자금 대차·배당 거래 상계표 작성 및 연결 조정 완전성 검토',
+    timeBudget: 10,
+    timeSpent: 0,
+  },
 ];
 
 // ── Mock Users ────────────────────────────────────────────────────────────────
@@ -302,22 +525,22 @@ export const MOCK_USERS: User[] = [
     id: 'user-1',
     name: '신관용',
     role: 'A2',
-    // A전자 기말감사 · C화학 PA · E바이오 IPO검토  (3 ETs, 14 tasks)
-    assignedEtIds: ['et-1', 'et-3', 'et-5'],
+    // A전자·C화학·E바이오·F유통·H에너지·I제약  (6 ETs)
+    assignedEtIds: ['et-1', 'et-3', 'et-5', 'et-6', 'et-8', 'et-9'],
   },
   {
     id: 'user-2',
     name: '김지수',
     role: 'SA1',
-    // A전자 기말감사 · B건설 반기검토 · D물산 내부회계  (3 ETs, 14 tasks)
-    assignedEtIds: ['et-1', 'et-2', 'et-4'],
+    // A전자·B건설·D물산·G금융·I제약·J건설·K전자  (7 ETs)
+    assignedEtIds: ['et-1', 'et-2', 'et-4', 'et-7', 'et-9', 'et-10', 'et-11'],
   },
   {
     id: 'user-3',
     name: '박서연',
     role: 'SM1',
-    // B건설 · C화학 · D물산 · E바이오  (4 ETs, 18 tasks)
-    assignedEtIds: ['et-2', 'et-3', 'et-4', 'et-5'],
+    // B건설·C화학·D물산·E바이오·F유통·G금융·H에너지·K전자·L그룹  (9 ETs)
+    assignedEtIds: ['et-2', 'et-3', 'et-4', 'et-5', 'et-6', 'et-7', 'et-8', 'et-11', 'et-12'],
   },
 ];
 
