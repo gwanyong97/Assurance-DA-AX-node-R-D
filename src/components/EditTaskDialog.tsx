@@ -30,6 +30,8 @@ interface FormState {
   status: Status;
   description: string;
   urgent: boolean;
+  timeBudget: string;
+  timeSpent: string;
 }
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
@@ -53,6 +55,8 @@ export default function EditTaskDialog({ task, onClose }: Props) {
     status: 'To-Do',
     description: '',
     urgent: false,
+    timeBudget: '',
+    timeSpent: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -68,6 +72,8 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         status: task.status,
         description: task.description ?? '',
         urgent: task.urgent ?? false,
+        timeBudget: task.timeBudget != null ? String(task.timeBudget) : '',
+        timeSpent: task.timeSpent != null ? String(task.timeSpent) : '',
       });
       setErrors({});
       setConfirmDelete(false);
@@ -96,6 +102,8 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         ...form,
         title: form.title.trim(),
         description: form.description.trim(),
+        timeBudget: form.timeBudget !== '' ? Number(form.timeBudget) : undefined,
+        timeSpent: form.timeSpent !== '' ? Number(form.timeSpent) : undefined,
       });
       setSubmitting(false);
       onClose();
@@ -226,6 +234,38 @@ export default function EditTaskDialog({ task, onClose }: Props) {
               placeholder="추가 업무 설명..."
               className="text-sm"
             />
+          </div>
+
+          {/* Time Budget + Time Spent */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs font-semibold">
+                Time Budget <span className="text-slate-400 font-normal">(h)</span>
+              </Label>
+              <Input
+                type="number"
+                min="0"
+                step="0.5"
+                value={form.timeBudget}
+                onChange={(e) => setForm((f) => ({ ...f, timeBudget: e.target.value }))}
+                placeholder="예: 8"
+                className="text-sm"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs font-semibold">
+                실투입 시간 <span className="text-slate-400 font-normal">(h)</span>
+              </Label>
+              <Input
+                type="number"
+                min="0"
+                step="0.5"
+                value={form.timeSpent}
+                onChange={(e) => setForm((f) => ({ ...f, timeSpent: e.target.value }))}
+                placeholder="예: 4"
+                className="text-sm"
+              />
+            </div>
           </div>
 
           {/* Urgent toggle */}

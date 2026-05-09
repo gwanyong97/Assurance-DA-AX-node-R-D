@@ -110,6 +110,33 @@ function TaskCard({ task, index }: TaskCardProps) {
           {format(parseISO(task.dueDate), 'M/d')}
         </span>
       </div>
+
+      {/* Time budget bar */}
+      {task.timeBudget != null && task.timeBudget > 0 && (() => {
+        const spent = task.timeSpent ?? 0;
+        const pct = Math.round((spent / task.timeBudget) * 100);
+        const barColor =
+          pct > 100 ? 'bg-red-400' : pct >= 80 ? 'bg-amber-400' : 'bg-emerald-400';
+        const textColor =
+          pct > 100 ? 'text-red-500' : pct >= 80 ? 'text-amber-500' : 'text-emerald-600';
+        return (
+          <div className="mt-2 pl-5">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[9px] text-slate-400 font-medium">투입 시간</span>
+              <span className={`text-[9px] font-bold ${textColor}`}>
+                {spent}h / {task.timeBudget}h
+                {pct > 100 && <span className="ml-1 text-red-400">초과</span>}
+              </span>
+            </div>
+            <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full ${barColor}`}
+                style={{ width: `${Math.min(pct, 100)}%` }}
+              />
+            </div>
+          </div>
+        );
+      })()}
     </motion.div>
   );
 }

@@ -15,6 +15,8 @@ export interface Task {
   status: Status;
   description?: string;
   urgent?: boolean;
+  timeBudget?: number;
+  timeSpent?: number;
 }
 
 export interface User {

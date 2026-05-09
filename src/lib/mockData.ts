@@ -42,6 +42,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-02',
     status: 'Done',
     description: '기말 현금 잔액 명세서 작성 및 은행 잔액증명서 대사',
+    timeBudget: 8,
+    timeSpent: 7,
   },
   {
     id: 'task-02',
@@ -50,6 +52,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-07',
     status: 'Done',
     description: '주거래 은행 5개사 대상 조회서 발송 및 회신 관리',
+    timeBudget: 4,
+    timeSpent: 5,
   },
   {
     id: 'task-03',
@@ -59,6 +63,8 @@ export const INITIAL_TASKS: Task[] = [
     status: 'In Progress',
     urgent: true,
     description: '외부조회 회신 결과와 장부 잔액 간 차이 원인 분석',
+    timeBudget: 12,
+    timeSpent: 6,
   },
   {
     id: 'task-04',
@@ -67,6 +73,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-19',
     status: 'To-Do',
     description: '수원 물류센터 실사 참여 및 실사조서 작성',
+    timeBudget: 8,
+    timeSpent: 0,
   },
   {
     id: 'task-05',
@@ -75,6 +83,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-26',
     status: 'To-Do',
     description: '반도체 장기공급계약 수행의무 식별 및 거래가격 배분 적정성 검토',
+    timeBudget: 16,
+    timeSpent: 0,
   },
 
   // ── B건설 반기검토 (rose) ─────────────────────────────────────────
@@ -85,6 +95,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-06',
     status: 'Done',
     description: '진행기준 적용 현장별 공사진행률 산정 적정성 검토',
+    timeBudget: 6,
+    timeSpent: 6,
   },
   {
     id: 'task-07',
@@ -94,6 +106,8 @@ export const INITIAL_TASKS: Task[] = [
     status: 'In Progress',
     urgent: true,
     description: '계열사 간 내부거래 내역 식별 및 시장가격 비교 분석',
+    timeBudget: 8,
+    timeSpent: 4,
   },
   {
     id: 'task-08',
@@ -102,6 +116,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-15',
     status: 'To-Do',
     description: '인천 송도 현장 미완성주택 현장 확인 및 원가 집계 대사',
+    timeBudget: 10,
+    timeSpent: 0,
   },
   {
     id: 'task-09',
@@ -128,6 +144,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-08',
     status: 'Done',
     description: '인수 사업부 현금창출단위 손상 징후 파악 및 회수가능액 산정 검토',
+    timeBudget: 10,
+    timeSpent: 9,
   },
   {
     id: 'task-12',
@@ -136,6 +154,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-13',
     status: 'In Progress',
     description: '유·무형자산 공정가치 평가 외부 전문가 보고서 검토',
+    timeBudget: 16,
+    timeSpent: 10,
   },
   {
     id: 'task-13',
@@ -144,6 +164,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-20',
     status: 'To-Do',
     description: '원재료·재공품·제품 단계별 저가법 평가 적정성 검토',
+    timeBudget: 12,
+    timeSpent: 0,
   },
   {
     id: 'task-14',
@@ -162,6 +184,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-05',
     status: 'Done',
     description: 'ERP 접근통제·변경관리·운영통제 설계 및 운영 효과성 평가',
+    timeBudget: 6,
+    timeSpent: 7,
   },
   {
     id: 'task-16',
@@ -171,6 +195,8 @@ export const INITIAL_TASKS: Task[] = [
     status: 'In Progress',
     urgent: true,
     description: '결산·공시 프로세스 내 핵심통제 운영현황 평가',
+    timeBudget: 12,
+    timeSpent: 5,
   },
   {
     id: 'task-17',
@@ -179,6 +205,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-22',
     status: 'To-Do',
     description: '퇴직자·직무변경자 접근권한 적시 회수 여부 확인',
+    timeBudget: 8,
+    timeSpent: 0,
   },
   {
     id: 'task-18',
@@ -197,6 +225,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-03',
     status: 'Done',
     description: '기말 전후 출하기록·세금계산서 발행일 대사를 통한 기간귀속 검증',
+    timeBudget: 4,
+    timeSpent: 3,
   },
   {
     id: 'task-20',
@@ -205,6 +235,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-10',
     status: 'Review Clear 필요',
     description: '이연법인세 계산 적정성 및 세무조정 항목 검토',
+    timeBudget: 8,
+    timeSpent: 8,
   },
   {
     id: 'task-21',
@@ -213,6 +245,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-16',
     status: 'To-Do',
     description: '임상 2·3상 개발비 자본화 요건 충족 여부 및 상각 방법 적정성 검토',
+    timeBudget: 10,
+    timeSpent: 2,
   },
   {
     id: 'task-22',
@@ -221,6 +255,8 @@ export const INITIAL_TASKS: Task[] = [
     dueDate: '2026-05-23',
     status: 'To-Do',
     description: 'CRO 계약 기반 임상비용 발생주의 적용 및 선급금 정산 검토',
+    timeBudget: 6,
+    timeSpent: 0,
   },
   {
     id: 'task-23',

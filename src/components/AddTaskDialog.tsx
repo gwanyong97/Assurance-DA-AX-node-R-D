@@ -30,6 +30,8 @@ interface FormState {
   status: Status;
   description: string;
   urgent: boolean;
+  timeBudget: string;
+  timeSpent: string;
 }
 
 const BLANK_FORM: FormState = {
@@ -39,6 +41,8 @@ const BLANK_FORM: FormState = {
   status: 'To-Do',
   description: '',
   urgent: false,
+  timeBudget: '',
+  timeSpent: '',
 };
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
@@ -72,7 +76,13 @@ export default function AddTaskDialog() {
     if (!validate()) return;
     setSubmitting(true);
     setTimeout(() => {
-      addTask({ ...form, title: form.title.trim(), description: form.description.trim() });
+      addTask({
+        ...form,
+        title: form.title.trim(),
+        description: form.description.trim(),
+        timeBudget: form.timeBudget !== '' ? Number(form.timeBudget) : undefined,
+        timeSpent: form.timeSpent !== '' ? Number(form.timeSpent) : undefined,
+      });
       setSubmitting(false);
       setOpen(false);
       setForm(BLANK_FORM);
@@ -214,6 +224,40 @@ export default function AddTaskDialog() {
                 placeholder="추가 업무 설명..."
                 className="text-sm"
               />
+            </div>
+
+            {/* Time Budget + Time Spent */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="time-budget" className="text-xs font-semibold">
+                  Time Budget <span className="text-slate-400 font-normal">(h)</span>
+                </Label>
+                <Input
+                  id="time-budget"
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  value={form.timeBudget}
+                  onChange={(e) => setForm((f) => ({ ...f, timeBudget: e.target.value }))}
+                  placeholder="예: 8"
+                  className="text-sm"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="time-spent" className="text-xs font-semibold">
+                  실투입 시간 <span className="text-slate-400 font-normal">(h)</span>
+                </Label>
+                <Input
+                  id="time-spent"
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  value={form.timeSpent}
+                  onChange={(e) => setForm((f) => ({ ...f, timeSpent: e.target.value }))}
+                  placeholder="예: 4"
+                  className="text-sm"
+                />
+              </div>
             </div>
 
             {/* Urgent toggle */}
