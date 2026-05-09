@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { parseISO, differenceInCalendarDays, format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -14,6 +15,8 @@ import {
   AlertCircle,
   MessageSquare,
   ClipboardList,
+  Search,
+  X,
 } from 'lucide-react';
 import { useAppContext } from '@/lib/store';
 import { MOCK_USERS } from '@/lib/mockData';
@@ -208,6 +211,7 @@ function EmptyDay() {
 export default function TaskSidebar() {
   const { state, getUpcomingTasks, getTasksForDate, getTasksFiltered } = useAppContext();
   const { selectedDate, activeEtFilter } = state;
+  const [searchQuery, setSearchQuery] = useState('');
 
   const upcomingTasks = getUpcomingTasks(30);
   // Urgent tasks pinned to top, rest keep dueDate order
@@ -215,6 +219,18 @@ export default function TaskSidebar() {
     ...upcomingTasks.filter((t) => t.urgent),
     ...upcomingTasks.filter((t) => !t.urgent),
   ];
+
+  const filteredUpcoming = searchQuery.trim()
+    ? sortedUpcoming.filter((t) => {
+        const q = searchQuery.toLowerCase();
+        const etName = state.ets.find((e) => e.id === t.etId)?.name ?? '';
+        return (
+          t.title.toLowerCase().includes(q) ||
+          etName.toLowerCase().includes(q) ||
+          t.status.toLowerCase().includes(q)
+        );
+      })
+    : sortedUpcoming;
 
   const selectedDayTasks = selectedDate
     ? [...getTasksForDate(selectedDate)].sort((a, b) => (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0))
@@ -265,7 +281,7 @@ export default function TaskSidebar() {
 
       {/* ── Upcoming Tasks ──────────────────────────────────────────── */}
       <div className="flex-1 p-4 overflow-y-auto min-h-0">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <CalendarClock className="w-4 h-4 text-slate-500" />
             <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
@@ -273,8 +289,28 @@ export default function TaskSidebar() {
             </h2>
           </div>
           <span className="text-[10px] bg-slate-100 text-slate-500 font-semibold px-2 py-0.5 rounded-full">
-            {upcomingTasks.length}건
+            {searchQuery.trim() ? `${filteredUpcoming.length} / ${upcomingTasks.length}건` : `${upcomingTasks.length}건`}
           </span>
+        </div>
+
+        {/* 검색 입력 */}
+        <div className="relative mb-3">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="업무명, ET, 상태 검색..."
+            className="w-full pl-8 pr-8 py-1.5 text-xs rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:bg-white placeholder:text-slate-400 transition-all"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Review Clear 필요 banner */}
@@ -288,18 +324,31 @@ export default function TaskSidebar() {
         )}
 
         <AnimatePresence mode="wait">
-          {sortedUpcoming.length === 0 ? (
-            <EmptyUpcoming key="empty" />
+          {filteredUpcoming.length === 0 ? (
+            searchQuery.trim() ? (
+              <motion.div
+                key="no-result"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-col items-center gap-2 py-10 text-slate-400"
+              >
+                <SearchX className="w-7 h-7" />
+                <p className="text-xs">"{searchQuery}"에 해당하는 업무가 없습니다.</p>
+              </motion.div>
+            ) : (
+              <EmptyUpcoming key="empty" />
+            )
           ) : (
             <motion.div
-              key={listKey}
+              key={listKey + searchQuery}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               className="flex flex-col gap-2"
             >
-              {sortedUpcoming.map((task, i) => (
+              {filteredUpcoming.map((task, i) => (
                 <TaskCard key={task.id} task={task} index={i} />
               ))}
             </motion.div>

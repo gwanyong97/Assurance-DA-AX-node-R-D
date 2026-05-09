@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Trash2, Star, MessageSquare, ClipboardList } from 'lucide-react';
+import { Loader2, Trash2, Star, MessageSquare, ClipboardList, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { useAppContext } from '@/lib/store';
 import { Task, Status } from '@/lib/types';
+import { MOCK_USERS } from '@/lib/mockData';
 
 interface FormState {
   etId: string;
@@ -34,6 +35,7 @@ interface FormState {
   timeSpent: string;
   comment: string;
   pending: string;
+  assigneeId: string;
 }
 
 const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
@@ -61,6 +63,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
     timeSpent: '',
     comment: '',
     pending: '',
+    assigneeId: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -80,6 +83,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         timeSpent: task.timeSpent != null ? String(task.timeSpent) : '',
         comment: task.comment ?? '',
         pending: task.pending ?? '',
+        assigneeId: task.assigneeId ?? '',
       });
       setErrors({});
       setConfirmDelete(false);
@@ -110,6 +114,7 @@ export default function EditTaskDialog({ task, onClose }: Props) {
         description: form.description.trim(),
         comment: form.comment.trim() || undefined,
         pending: form.pending.trim() || undefined,
+        assigneeId: form.assigneeId || undefined,
         timeBudget: form.timeBudget !== '' ? Number(form.timeBudget) : undefined,
         timeSpent: form.timeSpent !== '' ? Number(form.timeSpent) : undefined,
       });
@@ -126,6 +131,9 @@ export default function EditTaskDialog({ task, onClose }: Props) {
   };
 
   const selectedET = state.ets.find((e) => e.id === form.etId);
+  const etMembers = form.etId
+    ? MOCK_USERS.filter((u) => u.assignedEtIds.includes(form.etId))
+    : [];
 
   return (
     <Dialog
@@ -156,7 +164,16 @@ export default function EditTaskDialog({ task, onClose }: Props) {
             </Label>
             <Select
               value={form.etId || null}
-              onValueChange={(v) => { setForm((f) => ({ ...f, etId: v ?? '' })); clearError('etId'); }}
+              onValueChange={(v) => {
+                const newEtId = v ?? '';
+                const newMembers = MOCK_USERS.filter((u) => u.assignedEtIds.includes(newEtId));
+                setForm((f) => ({
+                  ...f,
+                  etId: newEtId,
+                  assigneeId: newMembers.some((u) => u.id === f.assigneeId) ? f.assigneeId : '',
+                }));
+                clearError('etId');
+              }}
             >
               <SelectTrigger className={`w-full text-sm ${errors.etId ? 'border-red-400' : ''}`}>
                 <SelectValue placeholder="ET 선택..." />
@@ -175,6 +192,45 @@ export default function EditTaskDialog({ task, onClose }: Props) {
             </Select>
             {errors.etId && <p className="text-[11px] text-red-500">{errors.etId}</p>}
           </div>
+
+          {/* Assignee */}
+          {etMembers.length > 0 && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs font-semibold flex items-center gap-1.5">
+                <UserCircle className="w-3.5 h-3.5 text-slate-400" />
+                담당자 <span className="text-slate-400 font-normal">(선택)</span>
+              </Label>
+              <Select
+                value={form.assigneeId || 'unassigned'}
+                onValueChange={(v) =>
+                  setForm((f) => ({ ...f, assigneeId: v === 'unassigned' ? '' : (v ?? '') }))
+                }
+              >
+                <SelectTrigger className="w-full text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="unassigned">
+                    <span className="text-slate-400">미지정</span>
+                  </SelectItem>
+                  {etMembers.map((u) => (
+                    <SelectItem key={u.id} value={u.id}>
+                      <span className="flex items-center gap-2">
+                        <span
+                          className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white shrink-0"
+                          style={{ backgroundColor: selectedET?.color ?? '#94a3b8' }}
+                        >
+                          {u.name[0]}
+                        </span>
+                        {u.name}
+                        <span className="text-[10px] text-slate-400">{u.role}</span>
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {/* Title */}
           <div className="flex flex-col gap-1.5">

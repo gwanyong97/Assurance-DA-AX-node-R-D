@@ -8,6 +8,7 @@ import CalendarGrid from '@/components/CalendarGrid';
 import TaskSidebar from '@/components/TaskSidebar';
 import AddTaskDialog from '@/components/AddTaskDialog';
 import EditTaskDialog from '@/components/EditTaskDialog';
+import DeadlineNotifier from '@/components/DeadlineNotifier';
 import { Task } from '@/lib/types';
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
       {/* ── Dialogs & FAB ────────────────────────────────────────────── */}
       <AddTaskDialog />
       <EditTaskDialog task={editingTask} onClose={() => setEditingTask(null)} />
+      <DeadlineNotifier />
     </div>
   );
 }
