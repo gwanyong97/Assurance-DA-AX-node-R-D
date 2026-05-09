@@ -242,21 +242,21 @@ export const MOCK_USERS: User[] = [
   {
     id: 'user-1',
     name: 'Gwany',
-    role: '2년차 감사인',
+    role: 'A2',
     // A전자 기말감사 · C화학 PA · E바이오 IPO컨토  (3 ETs, 14 tasks)
     assignedEtIds: ['et-1', 'et-3', 'et-5'],
   },
   {
     id: 'user-2',
     name: '김지수',
-    role: '3년차 감사인',
+    role: 'SA1',
     // A전자 기말감사 · B건설 반기검토 · D물산 내부회계  (3 ETs, 14 tasks)
     assignedEtIds: ['et-1', 'et-2', 'et-4'],
   },
   {
     id: 'user-3',
     name: '박서연',
-    role: '시니어',
+    role: 'SM1',
     // B건설 · C화학 · D물산 · E바이오  (4 ETs, 18 tasks)
     assignedEtIds: ['et-2', 'et-3', 'et-4', 'et-5'],
   },
