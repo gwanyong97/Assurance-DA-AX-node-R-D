@@ -14,7 +14,7 @@ import { INITIAL_ETS, INITIAL_TASKS, DEFAULT_USER } from './mockData';
 // ── localStorage persistence ──────────────────────────────────────────────────
 
 const STORAGE_KEY = 'et-calendar-state';
-const STORAGE_VERSION = 3; // bump when data shape changes to bust stale cache
+const STORAGE_VERSION = 4; // bump when data shape changes to bust stale cache
 
 function loadPersistedState(): Pick<AppState, 'ets' | 'tasks' | 'currentUser'> | null {
   if (typeof window === 'undefined') return null;
