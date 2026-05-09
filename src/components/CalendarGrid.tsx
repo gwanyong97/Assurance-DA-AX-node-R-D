@@ -211,9 +211,15 @@ export default function CalendarGrid({ onEditTask }: Props) {
                     ) : null;
                   })}
                   {tasks.length > 3 && (
-                    <p className="text-[10px] text-slate-400 font-medium pl-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedDate(dateStr);
+                      }}
+                      className="text-[10px] text-blue-500 font-medium pl-1 hover:text-blue-700 hover:underline text-left"
+                    >
                       +{tasks.length - 3}건 더보기
-                    </p>
+                    </button>
                   )}
                 </div>
               </div>
