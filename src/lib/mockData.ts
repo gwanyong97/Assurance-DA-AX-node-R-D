@@ -34,7 +34,7 @@ export const INITIAL_ETS: ET[] = [
 ];
 
 export const INITIAL_TASKS: Task[] = [
-  // ── A전자 기말감사 (blue) · 멤버: Gwany(user-1), 김지수(user-2) ──
+  // ── A전자 기말감사 (blue) · 멤버: 신관용(user-1), 김지수(user-2) ──
   {
     id: 'task-01',
     etId: 'et-1',
@@ -146,7 +146,7 @@ export const INITIAL_TASKS: Task[] = [
     description: '당기 준공 현장 최종 정산내역 검토 및 손익 귀속 적정성 확인',
   },
 
-  // ── C화학 PA (emerald) · 멤버: Gwany(user-1), 박서연(user-3) ──────
+  // ── C화학 PA (emerald) · 멤버: 신관용(user-1), 박서연(user-3) ──────
   {
     id: 'task-11',
     etId: 'et-3',
@@ -235,7 +235,7 @@ export const INITIAL_TASKS: Task[] = [
     description: '중요 업무프로세스별 통제 운영 증빙 검토 및 미비점 집계',
   },
 
-  // ── E바이오 IPO검토 (amber) · 멤버: Gwany(user-1), 박서연(user-3) ─
+  // ── E바이오 IPO검토 (amber) · 멤버: 신관용(user-1), 박서연(user-3) ─
   {
     id: 'task-19',
     etId: 'et-5',
@@ -300,7 +300,7 @@ export const INITIAL_TASKS: Task[] = [
 export const MOCK_USERS: User[] = [
   {
     id: 'user-1',
-    name: 'Gwany',
+    name: '신관용',
     role: 'A2',
     // A전자 기말감사 · C화학 PA · E바이오 IPO검토  (3 ETs, 14 tasks)
     assignedEtIds: ['et-1', 'et-3', 'et-5'],
