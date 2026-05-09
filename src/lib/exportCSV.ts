@@ -3,7 +3,7 @@ import { ET, Task } from './types';
 export function exportTasksToCSV(tasks: Task[], ets: ET[]): void {
   const etMap = new Map(ets.map((e) => [e.id, e.name]));
 
-  const headers = ['ET명', '업무명', '마감일', '상태', '메모'];
+  const headers = ['ET명', '업무명', '마감일', '상태', '긴급', 'Time Budget (h)', '실투입 시간 (h)', '메모'];
   const rows = tasks
     .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
     .map((task) => [
@@ -11,6 +11,9 @@ export function exportTasksToCSV(tasks: Task[], ets: ET[]): void {
       task.title,
       task.dueDate,
       task.status,
+      task.urgent ? '긴급' : '',
+      task.timeBudget != null ? String(task.timeBudget) : '',
+      task.timeSpent != null ? String(task.timeSpent) : '',
       task.description ?? '',
     ]);
 

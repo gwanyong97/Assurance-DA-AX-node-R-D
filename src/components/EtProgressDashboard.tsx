@@ -16,9 +16,10 @@ export default function EtProgressDashboard() {
     const etTasks = tasks.filter((t) => t.etId === et.id);
     const done = etTasks.filter((t) => t.status === 'Done').length;
     const inProgress = etTasks.filter((t) => t.status === 'In Progress').length;
+    const reviewClear = etTasks.filter((t) => t.status === 'Review Clear 필요').length;
     const total = etTasks.length;
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-    return { et, done, inProgress, todo: total - done - inProgress, total, pct };
+    return { et, done, inProgress, reviewClear, todo: total - done - inProgress - reviewClear, total, pct };
   });
 
   return (
@@ -34,7 +35,7 @@ export default function EtProgressDashboard() {
 
         {/* Progress cards */}
         <div className="flex-1 grid grid-cols-5 gap-4">
-          {etProgress.map(({ et, done, inProgress, todo, total, pct }, i) => (
+          {etProgress.map(({ et, done, inProgress, reviewClear, todo, total, pct }, i) => (
             <div key={et.id} className="flex flex-col gap-1">
               {/* ET name + pct */}
               <div className="flex items-center justify-between gap-1">
@@ -74,6 +75,11 @@ export default function EtProgressDashboard() {
                 <span className="text-[9px] text-blue-600 font-semibold bg-blue-50 px-1.5 py-0.5 rounded-full">
                   ⏱ {inProgress}
                 </span>
+                {reviewClear > 0 && (
+                  <span className="text-[9px] text-amber-600 font-semibold bg-amber-50 px-1.5 py-0.5 rounded-full">
+                    ⚠ {reviewClear}
+                  </span>
+                )}
                 <span className="text-[9px] text-slate-500 font-semibold bg-slate-100 px-1.5 py-0.5 rounded-full">
                   ○ {todo}
                 </span>
