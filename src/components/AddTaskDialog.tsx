@@ -103,6 +103,9 @@ export default function AddTaskDialog() {
   };
 
   const selectedET = state.ets.find((e) => e.id === form.etId);
+  const myETs = state.ets.filter((et) =>
+    state.currentUser.assignedEtIds.includes(et.id)
+  );
 
   return (
     <>
@@ -145,7 +148,7 @@ export default function AddTaskDialog() {
                   <SelectValue placeholder="ET 선택..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {state.ets.map((et) => (
+                  {myETs.map((et) => (
                     <SelectItem key={et.id} value={et.id}>
                       <span
                         className="w-2.5 h-2.5 rounded-full shrink-0 inline-block"
